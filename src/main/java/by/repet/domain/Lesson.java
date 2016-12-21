@@ -1,4 +1,4 @@
-package by.repet.domain;
+package by.repet.domain;//Created by vladr on 20.12.2016.
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,15 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Date;
 
-//Created by vladr on 20.11.2016.
 @Entity
-@Table(name = "courses")
+@Table(name = "lessons")
 @Getter
 @Setter
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Course {
+public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +21,10 @@ public class Course {
     private long id;
 
     @JsonProperty
-    private String name;
+    private Date date;
 
-    @OneToMany(mappedBy = "course", cascade = {CascadeType.REMOVE})
-    private Set<Lesson> lessons;
+    @JsonProperty
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Course course;
 }
