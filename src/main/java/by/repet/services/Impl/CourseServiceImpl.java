@@ -11,8 +11,12 @@ import java.util.Collection;
 @Service
 public class CourseServiceImpl implements CourseService {
 
+    private final CourseRepository courseRepository;
+
     @Autowired
-    private CourseRepository courseRepository;
+    public CourseServiceImpl(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
 
     @Override
     public Course getCourse(Long courseId) {

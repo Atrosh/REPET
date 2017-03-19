@@ -8,16 +8,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
 public class LessonController {
 
-    @Autowired
-    private LessonService lessonService;
+    private final LessonService lessonService;
 
-    @RequestMapping(value="/api/lessons", method= RequestMethod.GET)
-    public @ResponseBody Collection<Lesson> getAll() {
-        return lessonService.getAll();
+    @Autowired
+    public LessonController(LessonService lessonService) {
+        this.lessonService = lessonService;
+    }
+
+    @RequestMapping(value = "/api/lessons", method = RequestMethod.GET)
+    @ResponseBody
+    public Collection<Lesson> getToday() {
+        return lessonService.getTodayLessons();
+    }
+
+    @RequestMapping(value = "/api/week", method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<Collection<Lesson>> getWeek() {
+        return lessonService.getWeekLessons();
     }
 }

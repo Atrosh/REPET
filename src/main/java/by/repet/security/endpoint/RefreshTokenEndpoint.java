@@ -38,12 +38,21 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 public class RefreshTokenEndpoint {
-    @Autowired private JwtTokenFactory tokenFactory;
-    @Autowired private JwtSettings jwtSettings;
-    @Autowired private UserService userService;
-    @Autowired private TokenVerifier tokenVerifier;
-    @Autowired @Qualifier("jwtHeaderTokenExtractor") private TokenExtractor tokenExtractor;
-    
+    private final JwtTokenFactory tokenFactory;
+    private final JwtSettings jwtSettings;
+    private final UserService userService;
+    private final TokenVerifier tokenVerifier;
+    private final TokenExtractor tokenExtractor;
+
+    @Autowired
+    public RefreshTokenEndpoint(JwtTokenFactory tokenFactory, JwtSettings jwtSettings, UserService userService, TokenVerifier tokenVerifier, @Qualifier("jwtHeaderTokenExtractor") TokenExtractor tokenExtractor) {
+        this.tokenFactory = tokenFactory;
+        this.jwtSettings = jwtSettings;
+        this.userService = userService;
+        this.tokenVerifier = tokenVerifier;
+        this.tokenExtractor = tokenExtractor;
+    }
+
     @RequestMapping(value="/api/auth/token", method=RequestMethod.GET, produces={ MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody JwtToken refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String tokenPayload = tokenExtractor.extract(request.getHeader(WebSecurityConfig.JWT_TOKEN_HEADER_PARAM));

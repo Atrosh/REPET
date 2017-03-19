@@ -1,29 +1,35 @@
 package by.repet.domain;//Created by vladr on 20.12.2016.
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.ConstraintMode;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
 @Table(name = "lessons")
 @Getter
 @Setter
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty
     private long id;
 
-    @JsonProperty
     private Date date;
 
-    @JsonProperty
+    private String info;
+
+    private String task;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Course course;

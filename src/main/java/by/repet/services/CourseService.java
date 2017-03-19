@@ -6,7 +6,10 @@ import java.util.Collection;
 
 public interface CourseService {
     Course getCourse(Long courseId);
+
     Collection<Course> getAll();
+
     void add(Course course);
+
     void remove(Long courseId);
 }
