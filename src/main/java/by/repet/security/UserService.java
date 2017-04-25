@@ -15,6 +15,6 @@ public interface UserService {
     public Optional<User> getByUsername(String username);
     User getUser(Long userId);
     Collection<User> getAll();
-    void add(User user);
+    User add(User user);
     void remove(Long userId);
 }

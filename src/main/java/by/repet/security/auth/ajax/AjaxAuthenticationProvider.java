@@ -1,8 +1,8 @@
 package by.repet.security.auth.ajax;
 
 import by.repet.domain.User;
+import by.repet.security.UserService;
 import by.repet.security.model.UserContext;
-import by.repet.services.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -21,18 +22,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 
  * @author vladimir.stankovic
- *
- * Aug 3, 2016
+ *         <p>
+ *         Aug 3, 2016
  */
 @Component
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
-    private final BCryptPasswordEncoder encoder;
-    private final UserServiceImpl userService;
+    private final PasswordEncoder encoder;
+    private final UserService userService;
 
     @Autowired
-    public AjaxAuthenticationProvider(final UserServiceImpl userService, final BCryptPasswordEncoder encoder) {
+    public AjaxAuthenticationProvider(final UserService userService, final PasswordEncoder encoder) {
         this.userService = userService;
         this.encoder = encoder;
     }
@@ -45,20 +45,19 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
         String password = (String) authentication.getCredentials();
 
         User user = userService.getByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-        
+
         if (!encoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Authentication Failed. Username or Password not valid.");
         }
 
         if (user.getRoles() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
-        
+
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getRole()))
-                //.map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
                 .collect(Collectors.toList());
-        
+
         UserContext userContext = UserContext.create(user.getUsername(), authorities);
-        
+
         return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
     }
 

@@ -1,4 +1,4 @@
-package by.repet.domain;//Created by vladr on 20.12.2016.
+package by.repet.domain;//Created by vladr on 23.04.2017.
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,24 +22,25 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "lessons")
-public class Lesson {
+@Table(name = "progresses")
+public class Progress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private Date date;
-
-    private String info;
-
-    private String task;
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
+    private boolean passed;
+
     @JsonIgnore
     @ManyToOne(optional = false)
-    private Course course;
+    private User user;
+
+    @JsonIgnore
+    @ManyToOne(optional = false)
+    private Step step;
+
 }
