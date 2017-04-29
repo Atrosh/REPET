@@ -3,9 +3,9 @@ package by.repet.services.Impl;//Created by vladr on 20.12.2016.
 import by.repet.domain.Lesson;
 import by.repet.repositories.LessonRepository;
 import by.repet.services.LessonService;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,14 +15,10 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class LessonServiceImpl implements LessonService {
 
     private final LessonRepository lessonRepository;
-
-    @Autowired
-    public LessonServiceImpl(LessonRepository lessonRepository) {
-        this.lessonRepository = lessonRepository;
-    }
 
     @Override
     public Lesson getLesson(Long lessonId) {
@@ -52,7 +48,6 @@ public class LessonServiceImpl implements LessonService {
         }
         return days;
     }
-
 
     @Override
     public void add(Lesson lesson) {

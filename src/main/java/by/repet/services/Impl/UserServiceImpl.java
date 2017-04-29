@@ -18,6 +18,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private static final String ROLE_USER = "ROLE_USER";
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder;
@@ -35,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<User> getAll() {
-        return userRepository.findAll();
+        return roleRepository.findAllByRole(ROLE_USER).iterator().next().getUsers();
     }
 
     @Override
@@ -44,7 +46,7 @@ public class UserServiceImpl implements UserService {
         String name = ((UserContext) auth.getPrincipal()).getUsername();
         Optional<User> currentUser = userRepository.findByUsername(name);
         user.setOrganisation(currentUser.get().getOrganisation());
-        user.setRoles(roleRepository.findAllByRole("ROLE_USER"));
+        user.setRoles(roleRepository.findAllByRole(ROLE_USER));
         user.setPassword(encoder.encode(user.getPassword()));
         user.setEnabled(true);
         return userRepository.save(user);
