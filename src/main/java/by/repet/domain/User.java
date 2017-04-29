@@ -54,10 +54,8 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    @ManyToMany(mappedBy = "users")
     private Set<Role> roles;
 
     @JsonIgnore

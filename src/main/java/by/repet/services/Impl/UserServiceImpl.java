@@ -6,10 +6,8 @@ import by.repet.repositories.UserRepository;
 import by.repet.security.UserService;
 import by.repet.security.model.UserContext;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User add(User user) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = ((UserContext)auth.getPrincipal()).getUsername();
+        String name = ((UserContext) auth.getPrincipal()).getUsername();
         Optional<User> currentUser = userRepository.findByUsername(name);
         user.setOrganisation(currentUser.get().getOrganisation());
         user.setRoles(roleRepository.findAllByRole("ROLE_USER"));
