@@ -1,4 +1,4 @@
-package by.repet.security;
+package by.repet.services;
 
 import by.repet.domain.User;
 

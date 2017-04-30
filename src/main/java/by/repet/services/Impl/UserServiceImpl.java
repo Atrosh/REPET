@@ -3,7 +3,7 @@ package by.repet.services.Impl;//Created by vladr on 27.11.2016.
 import by.repet.domain.User;
 import by.repet.repositories.RoleRepository;
 import by.repet.repositories.UserRepository;
-import by.repet.security.UserService;
+import by.repet.services.UserService;
 import by.repet.security.model.UserContext;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;

@@ -9,7 +9,7 @@ public interface CourseService {
 
     Collection<Course> getAll();
 
-    void add(Course course);
+    Course add(Course course);
 
     void remove(Long courseId);
 }

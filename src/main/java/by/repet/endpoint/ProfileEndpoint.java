@@ -1,10 +1,10 @@
 package by.repet.endpoint;
 
 import by.repet.domain.User;
-import by.repet.security.UserService;
 import by.repet.security.auth.JwtAuthenticationToken;
 import by.repet.security.model.UserContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import by.repet.services.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +24,10 @@ import java.util.Collection;
  *         Aug 4, 2016
  */
 @RestController
+@AllArgsConstructor
 public class ProfileEndpoint {
 
     private final UserService userService;
-
-    @Autowired
-    public ProfileEndpoint(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/api/me")
     @ResponseBody
@@ -51,8 +47,8 @@ public class ProfileEndpoint {
     }
 
     @GetMapping("/api/user/all")
-    @ResponseBody
     public Collection<User> getAll() {
         return userService.getAll();
     }
+
 }

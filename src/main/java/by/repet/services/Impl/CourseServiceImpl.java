@@ -3,20 +3,16 @@ package by.repet.services.Impl;//Created by vladr on 20.12.2016.
 import by.repet.domain.Course;
 import by.repet.repositories.CourseRepository;
 import by.repet.services.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
+@AllArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
-
-    @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
 
     @Override
     public Course getCourse(Long courseId) {
@@ -29,8 +25,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void add(Course course) {
-        courseRepository.save(course);
+    public Course add(Course course) {
+        return courseRepository.save(course);
     }
 
     @Override

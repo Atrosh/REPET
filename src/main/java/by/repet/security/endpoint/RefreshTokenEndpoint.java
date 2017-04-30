@@ -1,7 +1,7 @@
 package by.repet.security.endpoint;
 
 import by.repet.domain.User;
-import by.repet.security.UserService;
+import by.repet.services.UserService;
 import by.repet.security.auth.jwt.extractor.TokenExtractor;
 import by.repet.security.auth.jwt.verifier.TokenVerifier;
 import by.repet.security.config.JwtSettings;
