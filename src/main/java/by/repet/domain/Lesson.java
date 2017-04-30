@@ -1,12 +1,10 @@
 package by.repet.domain;//Created by vladr on 20.12.2016.
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +38,6 @@ public class Lesson {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @JsonIgnore
     @ManyToOne(optional = false)
     private Course course;
 }
