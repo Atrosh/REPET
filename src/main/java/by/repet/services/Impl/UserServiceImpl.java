@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         if (user.getOrganisation() == null) {
             user.setOrganisation(currentUser.get().getOrganisation());
         }
-        if (user.getRoles() == null) {
+        if (user.getRoles() == null || user.getRoles().size() == 0) {
             user.setRoles(roleRepository.findAllByRole(ROLE_USER));
         } else {
             user.setRoles(roleRepository.findAllByRoleIn(user.getRoles().stream()

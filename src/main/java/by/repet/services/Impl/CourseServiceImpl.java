@@ -6,10 +6,12 @@ import by.repet.services.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
