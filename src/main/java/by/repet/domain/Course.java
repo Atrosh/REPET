@@ -35,6 +35,8 @@ public class Course {
 
     private String name;
 
+    private String description;
+
     private boolean open;
 
     @ManyToOne(optional = false)
@@ -45,7 +47,6 @@ public class Course {
     @JoinTable(joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> owners;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Unit> units;
 
