@@ -2,6 +2,7 @@ package by.repet.security.auth.ajax;
 
 import by.repet.domain.User;
 import by.repet.security.model.UserContext;
+import by.repet.services.Impl.UserServiceImpl;
 import by.repet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

@@ -1,0 +1,7 @@
+#server.port: 9966
+#spring.profiles: default
+demo.security.jwt:
+  tokenExpirationTime: 15 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://repet.by
+  tokenSigningKey: xm8EV6Hy5RMFK4EEACIDAwQus
