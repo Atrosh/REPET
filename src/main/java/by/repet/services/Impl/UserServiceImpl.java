@@ -49,9 +49,6 @@ public class UserServiceImpl implements UserService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = ((UserContext) auth.getPrincipal()).getUsername();
         Optional<User> currentUser = userRepository.findByUsername(name);
-        if (user.getOrganisation() == null) {
-            user.setOrganisation(currentUser.get().getOrganisation());
-        }
         if (user.getRoles() == null || user.getRoles().size() == 0) {
             user.setRoles(roleRepository.findAllByRole(ROLE_USER));
         } else {
