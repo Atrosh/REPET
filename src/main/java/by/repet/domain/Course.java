@@ -42,12 +42,12 @@ public class Course {
     @ManyToOne(optional = false)
     private Organisation organisation;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> owners;
 
-    @JsonProperty
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Unit> units;
 

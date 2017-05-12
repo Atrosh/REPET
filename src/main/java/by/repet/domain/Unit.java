@@ -1,7 +1,6 @@
 package by.repet.domain;//Created by vladr on 16.04.2017.
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -49,11 +49,11 @@ public class Unit {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     @OneToMany(mappedBy = "unit", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Paragraph> paragraphs;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "course_id")
     private Course course;
 }
