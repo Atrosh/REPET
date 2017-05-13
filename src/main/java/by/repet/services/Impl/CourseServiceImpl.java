@@ -27,6 +27,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Collection<Course> getAllByUserId(Long userId) {
+        return courseRepository.findAllByOwnersContaining(null);
+    }
+
+    @Override
+    public Collection<Course> getAllByOrganisationId(Long organisationId) {
+        return courseRepository.findAllByOrganisationId(organisationId);
+    }
+
+    @Override
     public Course add(Course course) {
         return courseRepository.save(course);
     }

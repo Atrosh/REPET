@@ -9,6 +9,10 @@ public interface CourseService {
 
     Collection<Course> getAll();
 
+    Collection<Course> getAllByUserId(Long userId);
+
+    Collection<Course> getAllByOrganisationId(Long organisationId);
+
     Course add(Course course);
 
     void remove(Long courseId);
