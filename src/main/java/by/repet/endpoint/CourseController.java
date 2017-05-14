@@ -3,6 +3,7 @@ package by.repet.endpoint;//Created by vladr on 02.05.2017.
 import by.repet.domain.Course;
 import by.repet.services.CourseService;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,5 +49,10 @@ public class CourseController {
     @GetMapping
     public Collection<Course> getAll() {
         return courseService.getAll();
+    }
+
+    @DeleteMapping("/{courseId}")
+    public void deleteOrganisation(@PathVariable Long courseId) {
+        courseService.remove(courseId);
     }
 }
