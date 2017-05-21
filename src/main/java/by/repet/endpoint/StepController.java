@@ -27,6 +27,21 @@ public class StepController {
         return stepService.getAllByParagraphId(paragraphId);
     }
 
+    @GetMapping("/course/{courseId}")
+    public Collection<Step> getCourseSteps(@PathVariable Long courseId) {
+        return stepService.getAllByCourseId(courseId);
+    }
+
+    @GetMapping("/count/course/{courseId}")
+    public Integer getCourseStepsCount(@PathVariable Long courseId) {
+        return stepService.getCourseStepsCount(courseId);
+    }
+
+    @GetMapping("/count/paragraph/{paragraphId}")
+    public Integer getParagraphStepsCount(@PathVariable Long paragraphId) {
+        return stepService.getParagraphStepsCount(paragraphId);
+    }
+
     @GetMapping("/{stepId}")
     public Step getStep(@PathVariable Long stepId) {
         return stepService.getStep(stepId);

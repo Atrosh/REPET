@@ -1,6 +1,6 @@
 package by.repet.domain;//Created by vladr on 23.04.2017.
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,11 +35,10 @@ public class Progress {
 
     private boolean passed;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(optional = false)
     private User user;
 
-    @JsonIgnore
     @ManyToOne(optional = false)
     private Step step;
 

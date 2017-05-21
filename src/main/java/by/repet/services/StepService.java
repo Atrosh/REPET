@@ -11,6 +11,12 @@ public interface StepService {
 
     Collection<Step> getAllByParagraphId(Long paragraphId);
 
+    Collection<Step> getAllByCourseId(Long courseId);
+
+    Integer getCourseStepsCount(Long courseId);
+
+    Integer getParagraphStepsCount(Long paragraphId);
+
     Step add(Step step);
 
     void remove(Long stepId);

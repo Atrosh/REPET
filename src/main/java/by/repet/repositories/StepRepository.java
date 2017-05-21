@@ -7,4 +7,7 @@ import java.util.Collection;
 
 public interface StepRepository extends JpaRepository<Step, Long> {
     Collection<Step> getAllByParagraphId(long paragraphId);
+    Collection<Step> findAllByParagraphUnitCourseIdOrderByParagraphUnitSerialAscParagraphSerialAscSerialAsc(long courseId);
+    Integer countAllByParagraphUnitCourseId(long courseId);
+    Integer countAllByParagraphId(long paragraphId);
 }

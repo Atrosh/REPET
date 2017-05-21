@@ -42,7 +42,6 @@ public class Course {
     @ManyToOne(optional = false)
     private Organisation organisation;
 
-    @JsonProperty
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> owners;

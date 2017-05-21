@@ -30,6 +30,21 @@ public class StepServiceImpl implements StepService {
     }
 
     @Override
+    public Collection<Step> getAllByCourseId(Long courseId) {
+        return stepRepository.findAllByParagraphUnitCourseIdOrderByParagraphUnitSerialAscParagraphSerialAscSerialAsc(courseId);
+    }
+
+    @Override
+    public Integer getCourseStepsCount(Long courseId) {
+        return stepRepository.countAllByParagraphUnitCourseId(courseId);
+    }
+
+    @Override
+    public Integer getParagraphStepsCount(Long paragraphId) {
+        return stepRepository.countAllByParagraphId(paragraphId);
+    }
+
+    @Override
     public Step add(Step step) {
         return stepRepository.save(step);
     }
