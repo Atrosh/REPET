@@ -7,6 +7,5 @@ import java.util.Collection;
 import java.util.Date;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
-    Collection<Lesson> findByDateBetween(Date start, Date end);
-
+    Collection<Lesson> findByUserIdAndDateBetween(long userId, Date start, Date end);
 }

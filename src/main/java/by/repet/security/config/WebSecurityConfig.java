@@ -23,9 +23,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -94,16 +91,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTION"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
-    @Bean
     protected BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -124,7 +111,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, FORM_BASED_LOGIN_ENTRY_POINT).permitAll() // Login end-point
                 .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll() // Token refresh end-point
-                .antMatchers("/console").permitAll() // H2 Console Dash-board - only for testing
                 .and()
                 .authorizeRequests()
                 .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points

@@ -1,5 +1,6 @@
 package by.repet.services;//Created by vladr on 20.12.2016.
 
+import by.repet.common.LessonDto;
 import by.repet.domain.Lesson;
 
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ public interface LessonService {
 
     ArrayList<Collection<Lesson>> getWeekLessons();
 
-    void add(Lesson lesson);
+    Lesson add(Lesson lesson);
+
+    void createLessons(LessonDto lessonDto);
 
     void remove(Long lessonId);
 }
