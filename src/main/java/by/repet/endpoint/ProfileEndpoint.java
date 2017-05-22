@@ -36,7 +36,7 @@ public class ProfileEndpoint {
         return userService.getByUsername(userContext.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found: " + userContext.getUsername()));
     }
 
-    @PostMapping("/api/user")
+    @PostMapping("/api/auth/registration")
     public User createUser(@RequestBody User user) {
         return userService.add(user);
     }

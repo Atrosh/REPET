@@ -42,6 +42,7 @@ import java.util.List;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
     public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/api/auth/login";
+    public static final String FORM_BASED_REGISTRATION_ENTRY_POINT = "/api/auth/registration/";
     public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
 
@@ -74,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() throws Exception {
-        List<String> pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
+        List<String> pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT, FORM_BASED_REGISTRATION_ENTRY_POINT);
         SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
         JwtTokenAuthenticationProcessingFilter filter
                 = new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
@@ -91,16 +92,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(ajaxAuthenticationProvider);
         auth.authenticationProvider(jwtAuthenticationProvider);
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTION"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 
     @Bean
@@ -121,10 +112,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and().cors().and()
+
                 .authorizeRequests()
+                .antMatchers(FORM_BASED_REGISTRATION_ENTRY_POINT).permitAll() // Login end-point
                 .antMatchers(HttpMethod.OPTIONS, FORM_BASED_LOGIN_ENTRY_POINT).permitAll() // Login end-point
                 .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll() // Token refresh end-point
-                .antMatchers("/console").permitAll() // H2 Console Dash-board - only for testing
                 .and()
                 .authorizeRequests()
                 .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points
