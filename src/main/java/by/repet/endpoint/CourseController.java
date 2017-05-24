@@ -36,9 +36,9 @@ public class CourseController {
         return courseService.getCourse(courseId);
     }
 
-    @GetMapping("/user/{userId}")
-    public Collection<Course> getUserCourses(@PathVariable Long userId) {
-        return courseService.getAllByUserId(userId);
+    @GetMapping("/user")
+    public Collection<Course> getUserCourses() {
+        return courseService.getCurrentTeacherCourses();
     }
 
     @GetMapping("/organisation/{organisationId}")

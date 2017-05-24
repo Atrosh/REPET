@@ -2,6 +2,7 @@ package by.repet.services.Impl;//Created by vladr on 20.12.2016.
 
 import by.repet.common.LessonDto;
 import by.repet.domain.Lesson;
+import by.repet.domain.User;
 import by.repet.repositories.LessonRepository;
 import by.repet.services.LessonService;
 import by.repet.services.UserContextService;
@@ -38,16 +39,20 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public Collection<Lesson> getTodayLessons() {
-        return lessonRepository.findByUserIdAndDateBetween(userContextService.getCurrentUser().getId(),
-                DateTime.now().minusDays(1).toDate(), DateTime.now().plusDays(1).toDate());
+        User user = userContextService.getCurrentUser();
+        Date since = DateTime.now().withTimeAtStartOfDay().toDate();
+        Date till = DateTime.now().withTimeAtStartOfDay().plusDays(1).toDate();
+        return lessonRepository.findByUserIdOrCourseInAndDateBetween(user.getId(), user.getCourses(), since, till);
     }
 
     @Override
     public ArrayList<Collection<Lesson>> getWeekLessons() {
+        User user = userContextService.getCurrentUser();
         ArrayList<Collection<Lesson>> days = new ArrayList<>();
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
-        Collection<Lesson> lessons = lessonRepository.findByUserIdAndDateBetween(userContextService.getCurrentUser().getId(),
+        Collection<Lesson> lessons = lessonRepository.findByUserIdOrCourseInAndDateBetween(
+                user.getId(), user.getCourses(),
                 DateTime.now().minusDays(7).toDate(), DateTime.now().plusDays(7).toDate());
         for (int i = 1; i < 8; i++) {
             c.set(Calendar.DAY_OF_WEEK, i + 1);

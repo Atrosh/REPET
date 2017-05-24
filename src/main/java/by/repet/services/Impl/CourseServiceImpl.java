@@ -3,11 +3,13 @@ package by.repet.services.Impl;//Created by vladr on 20.12.2016.
 import by.repet.domain.Course;
 import by.repet.repositories.CourseRepository;
 import by.repet.services.CourseService;
+import by.repet.services.UserContextService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Collections;
 
 @Service
 @AllArgsConstructor
@@ -15,6 +17,7 @@ import java.util.Collection;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
+    private final UserContextService userContextService;
 
     @Override
     public Course getCourse(Long courseId) {
@@ -27,8 +30,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Collection<Course> getAllByUserId(Long userId) {
-        return courseRepository.findAllByOwnersContaining(null);
+    public Collection<Course> getAllByUser() {
+        return courseRepository.findAllByOrganisationId(userContextService.getCurrentUser().getOrganisation().getId());
+    }
+
+    @Override
+    public Collection<Course> getCurrentTeacherCourses() {
+        return userContextService.getCurrentUser().getCourses();
     }
 
     @Override
@@ -38,6 +46,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course add(Course course) {
+        course.setOwners(Collections.singletonList(userContextService.getCurrentUser()));
         return courseRepository.save(course);
     }
 

@@ -9,7 +9,9 @@ public interface CourseService {
 
     Collection<Course> getAll();
 
-    Collection<Course> getAllByUserId(Long userId);
+    Collection<Course> getAllByUser();
+
+    Collection<Course> getCurrentTeacherCourses();
 
     Collection<Course> getAllByOrganisationId(Long organisationId);
 
