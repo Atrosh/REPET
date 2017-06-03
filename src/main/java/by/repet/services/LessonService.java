@@ -13,7 +13,7 @@ public interface LessonService {
 
     Collection<Lesson> getTodayLessons();
 
-    ArrayList<Collection<Lesson>> getWeekLessons();
+    ArrayList<Collection<Lesson>> getWeekLessons(int weekOffset);
 
     Lesson add(Lesson lesson);
 

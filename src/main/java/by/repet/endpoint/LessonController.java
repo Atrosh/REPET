@@ -5,8 +5,11 @@ import by.repet.domain.Lesson;
 import by.repet.services.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,15 +29,25 @@ public class LessonController {
         return lessonService.getTodayLessons();
     }
 
-    @GetMapping("/week")
-    public ArrayList<Collection<Lesson>> getWeek() {
-        return lessonService.getWeekLessons();
+    @GetMapping("/week/{offset}")
+    public ArrayList<Collection<Lesson>> getWeek(@PathVariable Integer offset) {
+        return lessonService.getWeekLessons(offset);
     }
 
     @PostMapping
     public ResponseEntity createLessons(@RequestBody LessonDto lessonDto) {
         lessonService.createLessons(lessonDto);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    public Lesson updateLesson(@RequestBody Lesson lesson) {
+        return lessonService.add(lesson);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteLesson(@PathVariable Long id) {
+        lessonService.remove(id);
     }
 
 }

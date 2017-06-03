@@ -50,13 +50,14 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public ArrayList<Collection<Lesson>> getWeekLessons() {
+    public ArrayList<Collection<Lesson>> getWeekLessons(int weekOffset) {
+        DateTime date = DateTime.now().plusWeeks(weekOffset);
         User user = userContextService.getCurrentUser();
         ArrayList<Collection<Lesson>> days = new ArrayList<>();
         Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
+        c.setTime(date.toDate());
         Collection<Lesson> lessons = lessonRepository.findByDateBetweenAndUserIdAndCourseIn(
-                DateTime.now().minusDays(7).toDate(), DateTime.now().plusDays(7).toDate(),
+                date.minusDays(7).toDate(), date.plusDays(7).toDate(),
                 user.getId(), getCourseId(user));
         for (int i = 1; i < 8; i++) {
             c.set(Calendar.DAY_OF_WEEK, i + 1);
